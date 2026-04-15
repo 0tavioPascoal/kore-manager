@@ -8,6 +8,7 @@ import TaskSeparator from './TaskSeparator';
 import { useState } from 'react';
 import TASKS from '../constants/tasks';
 import TaskItem from './TaskItem';
+import { toast } from 'sonner';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASKS);
@@ -21,12 +22,15 @@ const Tasks = () => {
         return task;
       }
       if (task.status === 'pending') {
+        toast.info('Tarefa iniciada!');
         return { ...task, status: 'progress' };
       }
       if (task.status === 'progress') {
+        toast.success('Tarefa concluida!');
         return { ...task, status: 'done' };
       }
       if (task.status === 'done') {
+        toast.info('Tarefa pendente!');
         return { ...task, status: 'pending' };
       }
       return task;
@@ -37,6 +41,7 @@ const Tasks = () => {
   const handleTaskClickedDelete = (taskId) => {
     const newTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(newTasks);
+    toast.success('Tarefa removida com sucesso!');
   };
 
   return (
